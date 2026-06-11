@@ -1,0 +1,75 @@
+{
+  "buildCommand": "pnpm build",
+  "devCommand": "pnpm dev",
+  "installCommand": "pnpm install",
+  "framework": "vite",
+  "outputDirectory": "dist",
+  "env": {
+    "DATABASE_URL": {
+      "description": "PostgreSQL connection string from NeonDB"
+    },
+    "JWT_SECRET": {
+      "description": "Secret key for JWT signing"
+    },
+    "OPENAI_API_KEY": {
+      "description": "OpenAI API key"
+    },
+    "GEMINI_API_KEY": {
+      "description": "Google Gemini API key"
+    },
+    "ANTHROPIC_API_KEY": {
+      "description": "Anthropic Claude API key"
+    },
+    "MISTRAL_API_KEY": {
+      "description": "Mistral API key"
+    },
+    "GROQ_API_KEY": {
+      "description": "Groq API key"
+    },
+    "COHERE_API_KEY": {
+      "description": "Cohere API key"
+    },
+    "PERPLEXITY_API_KEY": {
+      "description": "Perplexity API key"
+    },
+    "TOGETHER_API_KEY": {
+      "description": "Together AI API key"
+    },
+    "HUGGINGFACE_API_KEY": {
+      "description": "HuggingFace API key"
+    },
+    "DEEPSEEK_API_KEY": {
+      "description": "DeepSeek API key"
+    },
+    "CLOUDINARY_CLOUD_NAME": {
+      "description": "Cloudinary cloud name"
+    },
+    "CLOUDINARY_API_KEY": {
+      "description": "Cloudinary API key"
+    },
+    "CLOUDINARY_API_SECRET": {
+      "description": "Cloudinary API secret"
+    },
+    "WHISPER_API_KEY": {
+      "description": "OpenAI Whisper API key"
+    },
+    "NODE_ENV": {
+      "value": "production"
+    },
+    "PORT": {
+      "value": "3000"
+    }
+  },
+  "functions": {
+    "server/index.ts": {
+      "runtime": "nodejs18.x",
+      "memory": 1024,
+      "maxDuration": 60
+    }
+  },
+  "git": {
+    "deploymentEnabled": {
+      "main": true
+    }
+  }
+}

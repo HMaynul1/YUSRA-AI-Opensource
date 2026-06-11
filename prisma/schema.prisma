@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String     @id @default(cuid())
+  email     String     @unique
+  password  String
+  name      String?
+  role      Role       @default("user")
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  sessions ChatSession[]
+  messages Message[]
+
+  @@map("users")
+}
+
+model ChatSession {
+  id        String     @id @default(cuid())
+  userId    String
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String     @default("New Chat")
+  mode      String     @default("chat") // chat, creative, expert
+  language  String     @default("en") // en, bn, ar
+  model     String?    // AI model used
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  messages Message[]
+
+  @@index([userId])
+  @@map("chat_sessions")
+}
+
+model Message {
+  id        String     @id @default(cuid())
+  sessionId String
+  session   ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role      String     // "user" or "assistant"
+  content   String     @db.Text
+  model     String?    // AI model that generated this message
+  liked     Boolean    @default(false)
+  createdAt DateTime   @default(now())
+
+  @@index([sessionId])
+  @@index([userId])
+  @@map("messages")
+}
+
+model AppConfig {
+  id    String  @id @default(cuid())
+  key   String  @unique
+  value String  @db.Text
+  updatedAt DateTime @updatedAt
+
+  @@map("app_config")
+}
+
+enum Role {
+  user
+  admin
+}
