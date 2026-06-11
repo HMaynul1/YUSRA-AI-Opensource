@@ -1,24 +1,41 @@
 {
-  "buildCommand": "pnpm build",
+  "buildCommand": "pnpm build && npx prisma generate",
   "devCommand": "pnpm dev",
-  "installCommand": "pnpm install",
+  "installCommand": "pnpm install --frozen-lockfile",
   "framework": "vite",
   "outputDirectory": "dist",
+  "nodeVersion": "18.x",
   "env": {
     "DATABASE_URL": {
-      "description": "PostgreSQL connection string from NeonDB"
+      "description": "PostgreSQL connection string from NeonDB (required)",
+      "required": true
     },
     "JWT_SECRET": {
-      "description": "Secret key for JWT signing"
+      "description": "Secret key for JWT signing (required)",
+      "required": true
+    },
+    "FRONTEND_URL": {
+      "description": "Frontend URL for CORS (required)",
+      "required": true
+    },
+    "NODE_ENV": {
+      "value": "production",
+      "required": true
+    },
+    "PORT": {
+      "value": "3000"
+    },
+    "JWT_EXPIRES_IN": {
+      "value": "7d"
     },
     "OPENAI_API_KEY": {
-      "description": "OpenAI API key"
+      "description": "OpenAI API key (at least one AI provider required)"
     },
     "GEMINI_API_KEY": {
-      "description": "Google Gemini API key"
+      "description": "Google Gemini API key (at least one AI provider required)"
     },
     "ANTHROPIC_API_KEY": {
-      "description": "Anthropic Claude API key"
+      "description": "Anthropic Claude API key (at least one AI provider required)"
     },
     "MISTRAL_API_KEY": {
       "description": "Mistral API key"
@@ -42,26 +59,20 @@
       "description": "DeepSeek API key"
     },
     "CLOUDINARY_CLOUD_NAME": {
-      "description": "Cloudinary cloud name"
+      "description": "Cloudinary cloud name (optional)"
     },
     "CLOUDINARY_API_KEY": {
-      "description": "Cloudinary API key"
+      "description": "Cloudinary API key (optional)"
     },
     "CLOUDINARY_API_SECRET": {
-      "description": "Cloudinary API secret"
+      "description": "Cloudinary API secret (optional)"
     },
     "WHISPER_API_KEY": {
-      "description": "OpenAI Whisper API key"
-    },
-    "NODE_ENV": {
-      "value": "production"
-    },
-    "PORT": {
-      "value": "3000"
+      "description": "OpenAI Whisper API key (optional)"
     }
   },
   "functions": {
-    "server/index.ts": {
+    "api/**": {
       "runtime": "nodejs18.x",
       "memory": 1024,
       "maxDuration": 60
